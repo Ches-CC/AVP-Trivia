@@ -1,13 +1,13 @@
 
 $(document).ready(function () {
-
+    //g'bl va'bles
     var timer = 10;
     var timerFlag = false;
     var counterCorrect = 0;
     var counterIncorrect = 0;
     var questionList;;
 
-
+    //array to store all the questions/answers... no peeking!
     var gameQuestions = [
         {
             question: "What is your favorite question?",
@@ -38,46 +38,73 @@ $(document).ready(function () {
 
     // var i = gameQuestions[i];
 
+    //start button starts the game (suprise!); also hides itself... magic!
     $("#start-btn").on("click", function () {
         $(this).hide(1000);
         gameLoop();
     })
 
+    //functions in a function: so functional (except it doesn't function [yet])
     function gameLoop() {
         startTimer();
-        displayQuestion(0);
+
+        //is this where things are broken?
+        //how to iterate throgh the questions, but making it pause in between questions?
+        displayQuestion();
     }
 
 
-    function displayQuestion(i) {
-        console.log("test 1 2")
-        var gameQs = gameQuestions[i].question;
+    //displayQuestion-->primary function
+    //the parameter is supposed to be the next question (which are for-looped through...?)
+    function displayQuestion() {
+        //just removed the paramter... will redefine i below
+        // console.log("test 1 2")
+        
+        //First things first: list Question & Choices
+
+        //declaring vars which access the question-storing object, then push Q's to div
+        var gameQs = gameQuestions[index].question;
         $("#question-div").text(gameQs);
-        choiceDisplay = gameQuestions[i].choices;
+
+        //var for the choices listed out in the array (via for loop, natch)
+        choiceDisplay = gameQuestions[index].choices;
         for (j = 0; j < choiceDisplay.length; j++) {
+
+            //perhaps I should add another class to this li element to make it clearer where the next click ought to be?
             var newLi = $("<li>" + choiceDisplay[j] + "</li>");
             $("ul").append(newLi);
+            //okay, so the choices/list-items are appending to the unordered list via
         }
 
-        var $listItems = $("li");
-        $listItems.on("Click", function (e) {
+        //still broken, but think about .forEach(function(item, index, array){}) on the array-->question object
+
+        //Time to capture the user guess...
+        
+        var listItems = $("li");
+        //since these are dynamically-generated elements, ntb "document" on click, not the element itself
+        //(or so I've read)
+        $(document).on("click", listItems, function (e) {
+
+            //setting up a way to tell "right from wrong" (lol!)
             userGuess = e.target.textContent;
             correctAnswer = gameQuestions[i].answer;
-        
+            console.log(userGuess);
+            console.log(correctAnswer);
 
             if (userGuess == correctAnswer) {
                 // $("ul").empty();
-                var imageOne = $('<img src="./Assets/Images/placeholder.gif">');
+                var imageOne = $('<img src="assets/images/placeholder.gif">');
                 $("ul").append(imageOne);
                 console.log("Correct!");
                 counterCorrect++;
                 // nextQuestion();
                 stopTimer();
             }
-            else {
+            if (userGuess != correctAnswer) {
                 $("ul").append(imageOne);
                 // $("ul").empty();
-
+                var imageTwo = $('<img src="assets/images/alien.png">');
+                $("ul").append(imageTwo);
                 console.log("Incorrect!!");
                 counterIncorrect++;
                 stopTimer();
