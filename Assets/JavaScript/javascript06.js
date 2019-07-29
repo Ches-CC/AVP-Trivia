@@ -244,20 +244,20 @@ $(document).ready(function() {
   // Correct/Incorrect Notifications================
   function correctNotification() {
     clearDiv();
-    var imageCorrect = $('<img src="./assets/images/predator.png">');
+    var imageCorrect = $('<img src="./Assets/Images/predator.png">');
     $("ul").append(imageCorrect);
   }
 
   function incorrectNotification() {
     clearDiv();
-    var imageIncorrect = $('<img src="./assets/images/alien.png">');
+    var imageIncorrect = $('<img src="./Assets/Images/alien.png">');
     $("ul").append(imageIncorrect);
   }
 
   function timeUpNotification() {
     clearDiv();
     var imageTimeUp = $(
-      '<h2 class="light">TIMES UP!</h2><img src="./assets/images/facehugged.gif">'
+      '<h2 class="light">TIMES UP!</h2><img src="./Assets/Images/facehugged.gif">'
     );
     $("ul").append(imageTimeUp);
   }
